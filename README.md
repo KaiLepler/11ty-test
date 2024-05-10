@@ -7,4 +7,4 @@ and this is nomtal text... Awesome how this works. But I wonder why the Readme t
 
 
 
-[back home](../index.html)
+[back home](./index.html)
