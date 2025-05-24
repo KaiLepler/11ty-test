@@ -1,0 +1,35 @@
+---
+layout: layout.njk
+title: "Draft Posts - Admin"
+permalink: /admin/index.html
+eleventyExcludeFromCollections: true
+---
+
+<h1>Draft Blog Posts</h1>
+
+<p>This page lists all the draft posts currently in the <code>src/drafts</code> directory.</p>
+
+{% if collections.draftPosts.length > 0 %}
+  <ul>
+    {% for post in collections.draftPosts %}
+      <li>
+        <strong>{{ post.data.title or "Untitled Draft" }}</strong>
+        (Filename: <code>{{ post.inputPath | replace("src/drafts/", "") }}</code>)
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No drafts found.</p>
+{% endif %}
+
+<h2>Publishing a Draft</h2>
+<p>To publish a draft, follow these steps:</p>
+<ol>
+  <li>Move the draft file from the <code>src/drafts/</code> folder to the <code>src/posts/</code> folder.</li>
+  <li>Edit its frontmatter:
+    <ul>
+      <li>Remove the <code>draft: true</code> line (or set it to <code>draft: false</code>).</li>
+      <li>Ensure the <code>date</code> field is set to the desired publication date.</li>
+    </ul>
+  </li>
+</ol>
