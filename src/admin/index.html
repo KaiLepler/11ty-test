@@ -3,7 +3,6 @@ layout: layout.njk
 title: "Draft Posts - Admin"
 permalink: /admin/index.html
 eleventyExcludeFromCollections: true
-templateEngineOverride: njk,html
 ---
 
 <h1>Draft Blog Posts</h1>
@@ -15,7 +14,7 @@ templateEngineOverride: njk,html
     {% for post in collections.draftPosts %}
       <li>
         <strong>{{ post.data.title or "Untitled Draft" }}</strong>
-        (Filename: <code>{{ post.inputPath | replace("src/drafts/", "") }}</code>)
+        (Filename: <code>{{ post.inputPath | replace: "src/drafts/", "" }}</code>)
       </li>
     {% endfor %}
   </ul>
