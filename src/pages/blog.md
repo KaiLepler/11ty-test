@@ -2,6 +2,7 @@
 layout: layout.njk
 title: "My Blog"
 permalink: /blog/index.html
+templateEngineOverride: njk,md
 ---
 
 # My Blog
