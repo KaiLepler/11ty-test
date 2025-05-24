@@ -1,2 +1,214 @@
-body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
-header, footer { background-color: #f0f0f0; padding: 10px; text-align: center; }
+/* 1. Basic Reset/Normalize */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: block;
+}
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+a {
+  background-color: transparent;
+}
+
+img {
+  border-style: none;
+}
+
+/* 2. General Body Styling */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.container { /* To wrap content and center it */
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 3. Header Styling */
+.site-header { /* Assuming header tag might be used elsewhere or for flexibility */
+  background-color: #333;
+  color: #fff;
+  padding: 1rem 0;
+  border-bottom: 3px solid #555;
+}
+
+.site-header .container { /* Apply container to header content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title { /* Placeholder for site title/logo area */
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.site-title a {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+/* 4. Navigation Styling */
+nav ul {
+  list-style-type: none;
+  display: flex;
+  gap: 1rem; /* Space between items */
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+/* 5. Main Content Area */
+main {
+  padding: 2rem 0; /* Vertical padding, horizontal handled by .container */
+}
+
+/* 6. Footer Styling */
+.site-footer { /* Assuming footer tag might be used elsewhere or for flexibility */
+  background-color: #333;
+  color: #aaa;
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  border-top: 1px solid #555;
+}
+
+/* 7. Blog Post Styling */
+article h1, .blog-post h1 { /* For post titles */
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+article time, .blog-post-date { /* For post dates */
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #7f8c8d;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+article p, .blog-post p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+article a, .blog-post a {
+  color: #2980b9;
+}
+article a:hover, .blog-post a:hover {
+  text-decoration: underline;
+}
+
+/* Styles for blog listing page */
+.blog-list {
+  list-style: none;
+  padding: 0;
+}
+
+.blog-list li {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.blog-list h2 a {
+  text-decoration: none;
+  color: #34495e;
+}
+
+.blog-list h2 a:hover {
+  color: #2980b9;
+}
+
+
+/* 8. Photography Page/Section */
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block; /* Remove extra space below image */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 9. Utility Classes */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Basic button styling */
+.button, button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover, button:hover {
+  background-color: #2980b9;
+}
