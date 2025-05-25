@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to My Personal Homepage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="site-header">
   <div class="container">
     <div class="site-title"><a href="/">My Awesome Site</a></div> 
-    <nav>
+    <div style="display: flex; align-items: center;"> 
+      <nav>
   <ul>
     <li><a href="/">Home</a></li>
     <li><a href="/about/">About Me</a></li>
@@ -21,11 +25,22 @@
   </ul>
 </nav>
 
+      <div class="theme-switcher-container">
+        <label class="theme-switcher" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <div class="slider round"></div>
+          <span class="icon sun-icon">☀️</span>
+          <span class="icon moon-icon">🌙</span>
+        </label>
+      </div>
+    </div>
   </div>
 </header>
 
   <main class="container">
-    <h1>Welcome to My Personal Homepage!</h1>
+    
+<article class="page-standard">
+  <h1>Welcome to My Personal Homepage!</h1>
 <p>This is my personal space on the web. I'm glad you're here!</p>
 <h2>About Me</h2>
 <p>I am a passionate individual with interests in web development, technology, and creative pursuits. I love learning new things and sharing what I discover.</p>
@@ -36,6 +51,8 @@
 <h2>Check Out My Blog</h2>
 <p>I write about various topics on my <a href="/blog/">blog</a>. Head over to read my latest posts!</p>
 
+</article>
+
   </main>
   <footer class="site-footer">
   <div class="container">
@@ -43,5 +60,6 @@
   </div>
 </footer>
 
+  <script src="/js/theme-switcher.js" defer></script>
 </body>
 </html>
