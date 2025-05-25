@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="site-header">
   <div class="container">
     <div class="site-title"><a href="/">My Awesome Site</a></div> 
-    <nav>
+    <div style="display: flex; align-items: center;"> 
+      <nav>
   <ul>
     <li><a href="/">Home</a></li>
     <li><a href="/about/">About Me</a></li>
@@ -21,17 +25,30 @@
   </ul>
 </nav>
 
+      <div class="theme-switcher-container">
+        <label class="theme-switcher" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <div class="slider round"></div>
+          <span class="icon sun-icon">☀️</span>
+          <span class="icon moon-icon">🌙</span>
+        </label>
+      </div>
+    </div>
   </div>
 </header>
 
   <main class="container">
-    <h1>Photography</h1>
+    
+<article class="page-standard">
+  <h1>Photography</h1>
 <p>This is where I'll showcase my photography.</p>
 <div class="photo-gallery">
   <div class="gallery-item"><img src="/images/image1.jpg" alt="Placeholder Image 1 - Kitten"></div>
   <div class="gallery-item"><img src="/images/image2.jpg" alt="Placeholder Image 2 - Kitten"></div>
   <div class="gallery-item"><img src="/images/image3.jpg" alt="Placeholder Image 3 - Kitten"></div>
 </div>
+
+</article>
 
   </main>
   <footer class="site-footer">
@@ -40,5 +57,6 @@
   </div>
 </footer>
 
+  <script src="/js/theme-switcher.js" defer></script>
 </body>
 </html>

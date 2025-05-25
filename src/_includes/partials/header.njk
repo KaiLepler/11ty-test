@@ -1,6 +1,16 @@
 <header class="site-header">
   <div class="container">
     <div class="site-title"><a href="/">My Awesome Site</a></div> {# Placeholder updated, class added #}
-    {% include "partials/navigation.njk" %}
+    <div style="display: flex; align-items: center;"> {# Flex container for nav and switcher #}
+      {% include "partials/navigation.njk" %}
+      <div class="theme-switcher-container">
+        <label class="theme-switcher" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <div class="slider round"></div>
+          <span class="icon sun-icon">☀️</span>
+          <span class="icon moon-icon">🌙</span>
+        </label>
+      </div>
+    </div>
   </div>
 </header>

@@ -1,5 +1,3 @@
-{% extends "base.njk" %}
-
-{% block content %}
-  {{ content | safe }}
-{% endblock %}
+{% extends "layouts/standard-page.njk" %}
+{# This makes the old default layout behave exactly like the new standard page layout #}
+{# The 'content' block is implicitly passed from pages using this layout to standard-page.njk #}

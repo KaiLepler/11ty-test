@@ -1,0 +1,14 @@
+{% extends "../base.njk" %}
+
+{% block content %}
+<div class="layout-with-sidebar">
+  <article class="main-content">
+    {{ content | safe }}
+  </article>
+  <aside class="sidebar">
+    {% block sidebar %}
+      <p>This is a default sidebar. Override with page-specific content.</p>
+    {% endblock %}
+  </aside>
+</div>
+{% endblock %}

@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Future Masterpiece (Draft)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="site-header">
   <div class="container">
     <div class="site-title"><a href="/">My Awesome Site</a></div> 
-    <nav>
+    <div style="display: flex; align-items: center;"> 
+      <nav>
   <ul>
     <li><a href="/">Home</a></li>
     <li><a href="/about/">About Me</a></li>
@@ -21,10 +25,23 @@
   </ul>
 </nav>
 
+      <div class="theme-switcher-container">
+        <label class="theme-switcher" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <div class="slider round"></div>
+          <span class="icon sun-icon">☀️</span>
+          <span class="icon moon-icon">🌙</span>
+        </label>
+      </div>
+    </div>
   </div>
 </header>
 
   <main class="container">
+    
+  <article>
+    <h1>A Future Masterpiece (Draft)</h1>
+    <p><time datetime="2023-10-27">October 27, 2023</time></p>
     <h1>A Future Masterpiece (Draft)</h1>
 <p>This is a draft post. It's not ready for the world yet!</p>
 <p>I'm currently working on outlining the key ideas for this post. It's going to cover:</p>
@@ -35,6 +52,8 @@
 </ul>
 <p>Stay tuned for when this gets published!</p>
 
+  </article>
+
   </main>
   <footer class="site-footer">
   <div class="container">
@@ -42,5 +61,6 @@
   </div>
 </footer>
 
+  <script src="/js/theme-switcher.js" defer></script>
 </body>
 </html>

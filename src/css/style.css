@@ -1,214 +1,305 @@
-/* 1. Basic Reset/Normalize */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* 0. Theme, Typography, and Spacing Variables */
+:root {
+  /* Color Scheme (Dark by default) */
+  --color-background: #121212;
+  --color-text: #e0e0e0;
+  --color-primary: #bb86fc;
+  --color-secondary: #03dac6;
+  --color-surface: #1e1e1e;
+  --color-border: #333333;
+  --color-muted-text: #aaaaaa;
+  --color-link-hover-bg: #333333;
+  --color-switcher-bg: #333333;
+  --color-switcher-slider: #e0e0e0;
+  --color-switcher-icon: #e0e0e0;
+  --color-hero-text: #ffffff; /* Text color for hero section */
+  --color-hero-overlay: rgba(0,0,0,0.4); /* Overlay for hero image */
+
+
+  /* Typography */
+  --font-family-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  
+  --font-size-base: 1.125rem; 
+  --line-height-base: 1.7; 
+  
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-size-h1: 2.5rem; 
+  --font-size-h2: 2rem;   
+  --font-size-h3: 1.75rem;
+  --font-size-h4: 1.5rem; 
+  --font-size-h5: 1.25rem;
+  --font-size-h6: 1.125rem;
+
+  --heading-margin-bottom: 1rem;
+  --paragraph-margin-bottom: 1.5rem;
+
+  /* Spacing Variables */
+  --spacing-small: 0.5rem;
+  --spacing-medium: 1rem;
+  --spacing-large: 2rem;
+  --spacing-xlarge: 3rem;
+  --spacing-xxlarge: 4rem; /* Added for hero padding */
 }
 
-html {
-  line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
-}
-
-body {
-  margin: 0;
-}
-
-main {
-  display: block;
-}
-
-hr {
-  box-sizing: content-box; /* 1 */
-  height: 0; /* 1 */
-  overflow: visible; /* 2 */
-}
-
-pre,
-code,
-kbd,
-samp {
-  font-family: monospace, monospace; /* 1 */
-  font-size: 1em; /* 2 */
-}
-
-a {
-  background-color: transparent;
-}
-
-img {
-  border-style: none;
-}
-
-/* 2. General Body Styling */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  background-color: #f4f4f4;
-  color: #333;
-}
-
-.container { /* To wrap content and center it */
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* 3. Header Styling */
-.site-header { /* Assuming header tag might be used elsewhere or for flexibility */
-  background-color: #333;
-  color: #fff;
-  padding: 1rem 0;
-  border-bottom: 3px solid #555;
-}
-
-.site-header .container { /* Apply container to header content */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.site-title { /* Placeholder for site title/logo area */
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-.site-title a {
-  color: #fff;
-  text-decoration: none;
+html[data-theme='light'] {
+  --color-background: #ffffff;
+  --color-text: #212529;
+  --color-primary: #007bff;
+  --color-secondary: #6c757d;
+  --color-surface: #f8f9fa;
+  --color-border: #dee2e6;
+  --color-muted-text: #6c757d;
+  --color-link-hover-bg: #e9ecef;
+  --color-switcher-bg: #cccccc;
+  --color-switcher-slider: #212529;
+  --color-switcher-icon: #212529;
+  --color-hero-text: #ffffff; /* Keep hero text light for contrast on typical images */
+  --color-hero-overlay: rgba(0,0,0,0.3); /* Light theme might want a lighter overlay or none */
 }
 
 
-/* 4. Navigation Styling */
-nav ul {
-  list-style-type: none;
-  display: flex;
-  gap: 1rem; /* Space between items */
+/* 1. Basic Reset/Normalize (Existing) */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { line-height: var(--line-height-base); -webkit-text-size-adjust: 100%; transition: background-color 0.3s ease, color 0.3s ease; }
+body { margin: 0; font-family: var(--font-family-primary); font-size: var(--font-size-base); font-weight: var(--font-weight-normal); background-color: var(--color-background); color: var(--color-text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+main { display: block; }
+hr { box-sizing: content-box; height: 0; overflow: visible; border: 0; border-top: 1px solid var(--color-border); margin: var(--spacing-large) 0; }
+pre, code, kbd, samp { font-family: var(--font-family-monospace); font-size: 0.9em; background-color: var(--color-surface); color: var(--color-text); padding: 0.3em 0.5em; border-radius: 4px; border: 1px solid var(--color-border); }
+pre { padding: var(--spacing-medium); overflow-x: auto; margin-bottom: var(--paragraph-margin-bottom); }
+a { background-color: transparent; color: var(--color-primary); text-decoration: none; font-weight: var(--font-weight-medium); }
+a:hover { text-decoration: underline; color: var(--color-secondary); }
+img { border-style: none; max-width: 100%; height: auto; display: block; }
+
+/* 2. Container (Existing) */
+.container { max-width: 960px; margin: 0 auto; padding: 0 var(--spacing-medium); }
+
+/* 3. Header Styling (Existing, check for spacing variable usage) */
+.site-header { background-color: var(--color-surface); color: var(--color-text); padding: var(--spacing-medium) 0; border-bottom: 1px solid var(--color-border); }
+.site-header .container { display: flex; justify-content: space-between; align-items: center; }
+.site-title { font-size: 1.5rem; font-weight: var(--font-weight-bold); }
+.site-title a { color: var(--color-text); text-decoration: none; font-weight: var(--font-weight-bold); }
+
+/* 4. Navigation Styling (Existing, check for spacing variable usage) */
+nav ul { list-style-type: none; display: flex; gap: var(--spacing-medium); }
+nav ul li a { color: var(--color-text); text-decoration: none; padding: var(--spacing-small) var(--spacing-medium); border-radius: 4px; transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; font-weight: var(--font-weight-medium); }
+nav ul li a:hover, nav ul li a:focus { background-color: var(--color-link-hover-bg); color: var(--color-primary); }
+
+/* 5. Main Content Area (Existing, check for spacing variable usage) */
+main.container { padding-top: var(--spacing-large); padding-bottom: var(--spacing-large); }
+
+/* 6. Footer Styling (Existing, check for spacing variable usage) */
+.site-footer { background-color: var(--color-surface); color: var(--color-muted-text); padding: var(--spacing-large) 0; text-align: center; font-size: 0.9rem; border-top: 1px solid var(--color-border); }
+.site-footer a { color: var(--color-primary); font-weight: var(--font-weight-medium); }
+
+/* 7. Typography - Headings, Paragraphs (Existing, check for spacing variable usage) */
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-family-primary); color: var(--color-text); margin-top: var(--spacing-large); margin-bottom: var(--heading-margin-bottom); line-height: 1.3; }
+h1 { font-size: var(--font-size-h1); font-weight: var(--font-weight-bold); }
+h2 { font-size: var(--font-size-h2); font-weight: var(--font-weight-bold); }
+h3 { font-size: var(--font-size-h3); font-weight: var(--font-weight-semibold); }
+h4 { font-size: var(--font-size-h4); font-weight: var(--font-weight-semibold); }
+h5 { font-size: var(--font-size-h5); font-weight: var(--font-weight-medium); }
+h6 { font-size: var(--font-size-h6); font-weight: var(--font-weight-medium); }
+p { margin-bottom: var(--paragraph-margin-bottom); font-weight: var(--font-weight-normal); }
+article h1, .blog-post h1 { margin-bottom: 0.25em; }
+article time, .blog-post-date { font-size: 0.9rem; font-style: normal; color: var(--color-muted-text); display: block; margin-bottom: var(--spacing-large); font-weight: var(--font-weight-normal); }
+article a, .blog-post a { color: var(--color-primary); font-weight: var(--font-weight-semibold); text-decoration: underline; text-decoration-color: var(--color-border); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+article a:hover, .blog-post a:hover { color: var(--color-secondary); text-decoration-color: var(--color-secondary); }
+.blog-list { list-style: none; padding: 0; }
+.blog-list li { margin-bottom: var(--spacing-large); padding-bottom: var(--spacing-medium); border-bottom: 1px solid var(--color-border); }
+.blog-list h2 { margin-top: 0; margin-bottom: var(--spacing-small); }
+.blog-list h2 a { text-decoration: none; color: var(--color-text); font-weight: var(--font-weight-semibold); }
+.blog-list h2 a:hover { color: var(--color-primary); }
+.blog-list time { font-size: 0.85rem; color: var(--color-muted-text); display: block; margin-bottom: var(--spacing-small); }
+
+/* 8. Photography Page/Section (Existing) */
+.photo-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-medium); padding: var(--spacing-medium) 0; }
+.gallery-item img { border: 1px solid var(--color-border); border-radius: 4px; }
+
+/* 9. Utility Classes (Existing) */
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.button, button { display: inline-block; padding: 0.75rem 1.5rem; font-family: var(--font-family-primary); font-size: 1rem; font-weight: var(--font-weight-medium); text-align: center; text-decoration: none; color: var(--color-background); background-color: var(--color-secondary); border: none; border-radius: 4px; cursor: pointer; transition: opacity 0.2s ease; }
+.button:hover, button:hover { opacity: 0.85; }
+
+/* 10. Theme Switcher Styles (Existing) - No changes needed here unless related to spacing */
+.theme-switcher-container { display: flex; align-items: center; margin-left: var(--spacing-medium); }
+.theme-switcher { position: relative; display: inline-block; width: 60px; height: 34px; }
+.theme-switcher input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--color-switcher-bg); transition: .4s; border-radius: 34px; }
+.slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: var(--color-switcher-slider); transition: .4s; border-radius: 50%; }
+input:checked + .slider:before { transform: translateX(26px); }
+.theme-switcher .icon { position: absolute; top: 50%; transform: translateY(-50%); font-size: 1rem; color: var(--color-switcher-icon); pointer-events: none; }
+.theme-switcher .sun-icon { left: 8px; }
+.theme-switcher .moon-icon { right: 8px; }
+#theme-checkbox:not(:checked) ~ .sun-icon { opacity: 1; }
+#theme-checkbox:not(:checked) ~ .moon-icon { opacity: 0; }
+#theme-checkbox:checked ~ .sun-icon { opacity: 0; }
+#theme-checkbox:checked ~ .moon-icon { opacity: 1; }
+html[data-theme='dark'] .theme-switcher .sun-icon { opacity: 1; }
+html[data-theme='dark'] .theme-switcher .moon-icon { opacity: 0; }
+html[data-theme='light'] .theme-switcher .sun-icon { opacity: 0; }
+html[data-theme='light'] .theme-switcher .moon-icon { opacity: 1; }
+
+/* 11. New Layout Styles */
+
+/* .page-standard and content within */
+.page-standard {
+  max-width: 70ch; /* Max width for optimal readability */
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: var(--spacing-medium); /* Add some top padding */
 }
 
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 0.5rem;
-}
-
-nav ul li a:hover,
-nav ul li a:focus {
-  background-color: #555;
-  border-radius: 4px;
-}
-
-/* 5. Main Content Area */
-main {
-  padding: 2rem 0; /* Vertical padding, horizontal handled by .container */
-}
-
-/* 6. Footer Styling */
-.site-footer { /* Assuming footer tag might be used elsewhere or for flexibility */
-  background-color: #333;
-  color: #aaa;
-  padding: 1.5rem 0;
+.page-standard figure {
+  margin: var(--spacing-large) 0;
   text-align: center;
-  font-size: 0.9rem;
-  border-top: 1px solid #555;
 }
 
-/* 7. Blog Post Styling */
-article h1, .blog-post h1 { /* For post titles */
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
-}
-
-article time, .blog-post-date { /* For post dates */
-  font-size: 0.9rem;
+.page-standard figcaption {
+  font-size: 0.9em;
+  color: var(--color-muted-text);
+  margin-top: var(--spacing-small);
   font-style: italic;
-  color: #7f8c8d;
-  display: block;
-  margin-bottom: 1.5rem;
 }
 
-article p, .blog-post p {
-  margin-bottom: 1rem;
-  line-height: 1.7;
+.page-standard blockquote {
+  margin: var(--spacing-large) var(--spacing-medium);
+  padding: var(--spacing-medium) var(--spacing-large);
+  border-left: 4px solid var(--color-primary);
+  background-color: var(--color-surface);
+  font-style: italic;
+  font-size: 1.1em; /* Slightly larger for emphasis */
 }
 
-article a, .blog-post a {
-  color: #2980b9;
-}
-article a:hover, .blog-post a:hover {
-  text-decoration: underline;
+.page-standard blockquote p:last-child {
+  margin-bottom: 0;
 }
 
-/* Styles for blog listing page */
-.blog-list {
-  list-style: none;
-  padding: 0;
-}
-
-.blog-list li {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
-}
-
-.blog-list h2 a {
-  text-decoration: none;
-  color: #34495e;
-}
-
-.blog-list h2 a:hover {
-  color: #2980b9;
-}
-
-
-/* 8. Photography Page/Section */
-.photo-gallery {
+/* .layout-with-sidebar */
+.layout-with-sidebar {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
-  gap: 1rem;
-  padding: 1rem 0;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); /* Main content gets 3 parts, sidebar 1 part */
+  gap: var(--spacing-large);
+  align-items: start; /* Align items to the start of the grid cell */
 }
 
-.gallery-item img {
-  width: 100%;
-  height: auto;
-  display: block; /* Remove extra space below image */
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+.main-content {
+  /* Can remain largely unstyled, flows naturally */
 }
 
-/* 9. Utility Classes */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+.sidebar {
+  padding: var(--spacing-medium);
+  border-left: 1px solid var(--color-border);
+  /* Optional: background if different from main content area's parent */
+  /* background-color: var(--color-surface); */
 }
 
-/* Basic button styling */
-.button, button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+.sidebar h3 { /* Example styling for sidebar headings */
+    margin-top: 0; /* First heading in sidebar might not need top margin */
+    font-size: var(--font-size-h5);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-small);
+    margin-bottom: var(--spacing-medium);
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar ul li a {
+    display: block;
+    padding: var(--spacing-small) 0;
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: var(--font-weight-normal);
+}
+.sidebar ul li a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+
+/* Responsive: Stack columns on smaller screens for sidebar layout */
+@media (max-width: 768px) {
+  .layout-with-sidebar {
+    grid-template-columns: 1fr; /* Stack them */
+  }
+  .sidebar {
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--spacing-large);
+    padding-top: var(--spacing-large); /* Add padding when it's stacked on top */
+  }
+}
+
+/* .page-wide */
+.page-wide {
+  max-width: 1200px; /* Wider than standard, but not full viewport width */
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--spacing-medium);
+}
+
+/* .hero-image-section */
+.hero-image-section {
+  min-height: 45vh; /* Slightly taller */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  text-decoration: none;
-  color: #fff;
-  background-color: #3498db;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: var(--spacing-xxlarge) var(--spacing-medium); /* Generous padding */
+  position: relative; /* For pseudo-element overlay */
+  color: var(--color-hero-text); /* Default hero text color */
+  margin-bottom: var(--spacing-large); /* Space before content below */
 }
 
-.button:hover, button:hover {
-  background-color: #2980b9;
+.hero-image-section::before { /* Optional overlay for text readability */
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--color-hero-overlay); 
+  z-index: 1;
+}
+
+.hero-image-section .hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-image-section h1 {
+  font-size: 3rem; /* Larger for hero */
+  color: inherit; /* Inherit from .hero-image-section or .hero-content */
+  margin-bottom: var(--spacing-medium);
+  font-weight: var(--font-weight-bold);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Subtle shadow for readability */
+}
+
+.hero-image-section .hero-subtitle {
+  font-size: 1.5rem; /* Larger subtitle */
+  color: inherit;
+  font-weight: var(--font-weight-light);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4); /* Subtle shadow */
+  max-width: 60ch; /* Keep subtitle readable */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* .content-below-hero */
+.content-below-hero {
+  /* This class is on an <article> that might already have .page-standard styling.
+     If .page-standard provides enough top margin/padding, this might not be needed.
+     Otherwise, add top margin here specifically for content after a hero. */
+  /* margin-top: var(--spacing-large); */ /* Already handled by hero's margin-bottom */
+}
+
+/* Ensure .page-standard used within .content-below-hero doesn't add excessive top padding if hero is present */
+.hero-image-section + .page-standard {
+    padding-top: 0; /* Remove top padding if it directly follows a hero */
 }
