@@ -1,35 +1,98 @@
----
-layout: layout.njk
-title: "Draft Posts - Admin"
-permalink: /admin/index.html
-eleventyExcludeFromCollections: true
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Blog Post Manager</h1>
+            <nav>
+                <button id="new-post-btn" class="btn btn-primary">New Post</button>
+                <button id="import-post-btn" class="btn btn-secondary">Import Markdown</button>
+                <a href="/" class="btn btn-secondary">Back to Site</a>
+            </nav>
+        </header>
 
-<h1>Draft Blog Posts</h1>
+        <main class="admin-main">
+            <!-- Post List View -->
+            <div id="post-list-view" class="view active">
+                <div class="posts-grid">
+                    <div class="posts-section">
+                        <h2>Published Posts</h2>
+                        <div id="published-posts" class="posts-list"></div>
+                    </div>
+                    <div class="posts-section">
+                        <h2>Draft Posts</h2>
+                        <div id="draft-posts" class="posts-list"></div>
+                    </div>
+                </div>
+            </div>
 
-<p>This page lists all the draft posts currently in the <code>src/drafts</code> directory.</p>
+            <!-- Post Editor View -->
+            <div id="post-editor-view" class="view">
+                <div class="editor-header">
+                    <button id="back-to-list" class="btn btn-secondary">← Back to Posts</button>
+                    <div class="editor-actions">
+                        <button id="save-post" class="btn btn-primary">Save Post</button>
+                        <button id="delete-post" class="btn btn-danger" style="display: none;">Delete Post</button>
+                    </div>
+                </div>
 
-{% if collections.draftPosts.length > 0 %}
-  <ul>
-    {% for post in collections.draftPosts %}
-      <li>
-        <strong>{{ post.data.title or "Untitled Draft" }}</strong>
-        (Filename: <code>{{ post.inputPath | replace: "src/drafts/", "" }}</code>)
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>No drafts found.</p>
-{% endif %}
+                <form id="post-form" class="post-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="post-title">Title</label>
+                            <input type="text" id="post-title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="post-layout">Layout</label>
+                            <select id="post-layout" name="layout">
+                                <option value="post.njk">Standard Post</option>
+                                <option value="layouts/standard-page.njk">Standard Page</option>
+                                <option value="layouts/hero-image-page.njk">Hero Image Page</option>
+                                <option value="layouts/page-with-sidebar.njk">Page with Sidebar</option>
+                                <option value="layouts/wide-page.njk">Wide Page</option>
+                            </select>
+                        </div>
+                    </div>
 
-<h2>Publishing a Draft</h2>
-<p>To publish a draft, follow these steps:</p>
-<ol>
-  <li>Move the draft file from the <code>src/drafts/</code> folder to the <code>src/posts/</code> folder.</li>
-  <li>Edit its frontmatter:
-    <ul>
-      <li>Remove the <code>draft: true</code> line (or set it to <code>draft: false</code>).</li>
-      <li>Ensure the <code>date</code> field is set to the desired publication date.</li>
-    </ul>
-  </li>
-</ol>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="post-date">Date</label>
+                            <input type="datetime-local" id="post-date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="post-status">Status</label>
+                            <select id="post-status" name="status">
+                                <option value="published">Published</option>
+                                <option value="draft">Draft</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-tags">Tags (comma-separated)</label>
+                        <input type="text" id="post-tags" name="tags" placeholder="web, javascript, tutorial">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-excerpt">Excerpt</label>
+                        <textarea id="post-excerpt" name="excerpt" rows="3" placeholder="Brief description of the post..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-content">Content</label>
+                        <textarea id="post-content" name="content" rows="20" placeholder="Write your post content in Markdown..."></textarea>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
