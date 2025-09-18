@@ -303,3 +303,18 @@ html[data-theme='light'] .theme-switcher .moon-icon { opacity: 1; }
 .hero-image-section + .page-standard {
     padding-top: 0; /* Remove top padding if it directly follows a hero */
 }
+/* Admin Link Styling */
+.admin-link {
+  background: var(--color-primary) !important;
+  color: var(--color-background) !important;
+  padding: 0.25rem 0.75rem !important;
+  border-radius: 4px !important;
+  font-weight: var(--font-weight-medium) !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-link:hover {
+  background: var(--color-secondary) !important;
+  transform: translateY(-1px) !important;
+}
