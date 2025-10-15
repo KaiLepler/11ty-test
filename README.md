@@ -48,3 +48,12 @@ This will typically make the site available at `http://localhost:8080`.
 * `_site/`: Contains the generated static site (output directory). This directory is usually not committed to version control.
 * `eleventy.config.js`: The Eleventy configuration file.
 * `package.json`: Defines project dependencies and scripts.
+* `.eleventyignore`: Specifies files and directories that Eleventy should ignore during the build process
+
+## Contributing
+
+me
+
+### Arch
+
+![Architecture Diagram](./readme.svg)
