@@ -701,13 +701,13 @@ html[data-theme='light'] .theme-switcher .moon-icon {
   justify-content: center;
   padding: 0.6rem;
   border-radius: 50%;
-  color: #4a5e55;
-  /* Mudgreengrey for better visibility in light mode */
+  color: #2F3E35;
+  /* Darker shade for better visibility in light mode */
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   text-decoration: none;
-  background: rgba(74, 94, 85, 0.1);
-  /* Subtle background matching the icon */
+  background: rgba(47, 62, 53, 0.15);
+  /* Darker background matching the icon */
   border: 1px solid transparent;
 }
 
@@ -783,27 +783,27 @@ html[data-theme='light'] .theme-switcher .moon-icon {
   }
 
   .nav-link:hover {
-    color: #ff00ff;
-    /* Magenta in dark mode for variety, or keep cyan */
-    background-color: rgba(255, 0, 255, 0.15);
-    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5),
-      0 0 30px rgba(255, 0, 255, 0.3);
-    border-color: rgba(255, 0, 255, 0.5);
+    color: #00e5ff;
+    /* Cyan in dark mode */
+    background-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.5),
+      0 0 30px rgba(0, 229, 255, 0.3);
+    border-color: rgba(0, 229, 255, 0.5);
   }
 
   .nav-link:hover svg {
-    filter: drop-shadow(0 0 5px rgba(255, 0, 255, 0.8));
+    filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.8));
   }
 
   .tooltip {
     background-color: #000;
-    color: #ff00ff;
-    border-color: #ff00ff;
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+    color: #00e5ff;
+    border-color: #00e5ff;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
   }
 
   .tooltip::before {
-    border-color: transparent transparent #ff00ff transparent;
+    border-color: transparent transparent #00e5ff transparent;
   }
 }
 
