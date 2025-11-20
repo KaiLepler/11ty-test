@@ -701,11 +701,13 @@ html[data-theme='light'] .theme-switcher .moon-icon {
   justify-content: center;
   padding: 0.6rem;
   border-radius: 50%;
-  color: var(--text-color, #333);
+  color: #4a5e55;
+  /* Mudgreengrey for better visibility in light mode */
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(74, 94, 85, 0.1);
+  /* Subtle background matching the icon */
   border: 1px solid transparent;
 }
 
