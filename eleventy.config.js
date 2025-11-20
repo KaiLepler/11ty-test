@@ -1,20 +1,20 @@
 // eleventy.config.js
 const { DateTime } = require("luxon");
 
-module.exports = function(eleventyConfig) {
+module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/admin");
   eleventyConfig.addPassthroughCopy("src/js");
 
   // Collections
-  eleventyConfig.addCollection("publishedPosts", function(collectionApi) {
+  eleventyConfig.addCollection("publishedPosts", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/posts/**/*.md")
       .filter(item => !item.data.draft)
       .sort((a, b) => b.date - a.date);
   });
 
-  eleventyConfig.addCollection("draftPosts", function(collectionApi) {
+  eleventyConfig.addCollection("draftPosts", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/drafts/**/*.md");
   });
 
@@ -29,6 +29,7 @@ module.exports = function(eleventyConfig) {
       input: "src",
       output: "_site",
       includes: "_includes" // Optional: common convention for layouts
-    }
+    },
+    pathPrefix: "/11ty-test/"
   };
 };
