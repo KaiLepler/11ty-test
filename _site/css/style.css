@@ -527,9 +527,7 @@ html[data-theme='light'] .theme-switcher .moon-icon {
   /* Align items to the start of the grid cell */
 }
 
-.main-content {
-  /* Can remain largely unstyled, flows naturally */
-}
+/* .main-content styling is intentionally left empty – content flows naturally */
 
 .sidebar {
   padding: var(--spacing-medium);
@@ -655,13 +653,7 @@ html[data-theme='light'] .theme-switcher .moon-icon {
 }
 
 /* .content-below-hero */
-.content-below-hero {
-  /* This class is on an <article> that might already have .page-standard styling.
-     If .page-standard provides enough top margin/padding, this might not be needed.
-     Otherwise, add top margin here specifically for content after a hero. */
-  /* margin-top: var(--spacing-large); */
-  /* Already handled by hero's margin-bottom */
-}
+/* .content-below-hero is kept for semantic purposes; no additional styles needed */
 
 /* Ensure .page-standard used within .content-below-hero doesn't add excessive top padding if hero is present */
 .hero-image-section+.page-standard {
@@ -701,25 +693,27 @@ html[data-theme='light'] .theme-switcher .moon-icon {
   justify-content: center;
   padding: 0.6rem;
   border-radius: 50%;
-  color: #2F3E35;
-  /* Darker shade for better visibility in light mode */
+  color: #ffffff;
+  /* white text */
+  background: #2F3E35;
+  /* solid dark background for contrast */
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   text-decoration: none;
-  background: rgba(47, 62, 53, 0.15);
-  /* Darker background matching the icon */
   border: 1px solid transparent;
 }
 
-.nav-link:hover {
-  background-color: rgba(0, 180, 216, 0.1);
-  color: #0077b6;
-  /* Darker blue-cyan for better contrast on light bg */
+.nav-link:hover,
+.nav-link:focus {
+  background-color: #00b4d8;
+  /* cyan background */
+  color: #000000;
+  /* black text for sufficient contrast */
   transform: translateY(-4px) scale(1.1);
-  box-shadow: 0 0 15px rgba(0, 180, 216, 0.4),
-    0 0 30px rgba(0, 180, 216, 0.2),
-    inset 0 0 10px rgba(0, 180, 216, 0.1);
-  border-color: rgba(0, 119, 182, 0.5);
+  box-shadow: 0 0 15px rgba(0, 180, 216, 0.6),
+    0 0 30px rgba(0, 180, 216, 0.4),
+    inset 0 0 10px rgba(0, 180, 216, 0.2);
+  border-color: rgba(0, 119, 182, 0.8);
 }
 
 .nav-link svg {
@@ -784,7 +778,7 @@ html[data-theme='light'] .theme-switcher .moon-icon {
 
   .nav-link:hover {
     color: #00e5ff;
-    /* Cyan in dark mode */
+    /* cyan */
     background-color: rgba(0, 229, 255, 0.15);
     box-shadow: 0 0 15px rgba(0, 229, 255, 0.5),
       0 0 30px rgba(0, 229, 255, 0.3);
@@ -821,4 +815,41 @@ html[data-theme='light'] .theme-switcher .moon-icon {
     width: 20px;
     height: 20px;
   }
+}
+
+/* Accessibility enhancements */
+.nav-link:focus-visible {
+  outline: 2px solid #00b4d8;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .nav-link,
+  .nav-link:hover,
+  .nav-link:focus {
+    transition: none;
+    transform: none;
+  }
+}
+
+.tooltip[aria-hidden="true"] {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Skip‑link – visually hidden until focused */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: -999px;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background: #000;
+  color: #fff;
+  padding: .5rem 1rem;
+  z-index: 1000;
 }
