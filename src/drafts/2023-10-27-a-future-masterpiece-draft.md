@@ -1,9 +1,10 @@
 ---
-layout: post.njk
+layout: "post.njk"
 title: "A Future Masterpiece (Draft)"
-date: 2023-10-27 
+date: "2023-10-27T00:00:00.000Z"
+tags:
+  - posts
 draft: true
-tags: [posts] 
 ---
 
 # A Future Masterpiece (Draft)

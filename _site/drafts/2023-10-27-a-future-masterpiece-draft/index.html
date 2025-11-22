@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Future Masterpiece (Draft)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/11ty-test/css/style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header">
+  <div class="container">
+    <div class="site-title"><a href="/11ty-test/">My Awesome Site</a></div> 
+    <div style="display: flex; align-items: center;"> 
+      <nav class="main-nav" aria-label="Primary navigation">
+  <ul>
+    <li>
+      <a href="/11ty-test/" aria-label="Home" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="tooltip" role="tooltip" aria-hidden="true">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="/11ty-test/about/" aria-label="About Me" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="tooltip" role="tooltip" aria-hidden="true">About Me</span>
+      </a>
+    </li>
+    <li>
+      <a href="/11ty-test/cv/" aria-label="CV" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+        <span class="tooltip" role="tooltip" aria-hidden="true">CV</span>
+      </a>
+    </li>
+    <li>
+      <a href="/11ty-test/work-demos/" aria-label="Work Demos" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span class="tooltip" role="tooltip" aria-hidden="true">Work Demos</span>
+      </a>
+    </li>
+    <li>
+      <a href="/11ty-test/photography/" aria-label="Photography" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+        <span class="tooltip" role="tooltip" aria-hidden="true">Photography</span>
+      </a>
+    </li>
+    <li>
+      <a href="/11ty-test/blog/" aria-label="Blog" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span class="tooltip" role="tooltip" aria-hidden="true">Blog</span>
+      </a>
+    </li>
+    <li>
+      <a href="/11ty-test/admin/" aria-label="Admin" class="nav-link admin-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span class="tooltip" role="tooltip" aria-hidden="true">Admin</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+      <div class="theme-switcher-container">
+        <label class="theme-switcher" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <div class="slider round"></div>
+          <span class="icon sun-icon">☀️</span>
+          <span class="icon moon-icon">🌙</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main id="main-content" class="container">
+    
+  <article>
+    <h1>A Future Masterpiece (Draft)</h1>
+    <p><time datetime="Invalid DateTime">Invalid DateTime</time></p>
+    <h1>A Future Masterpiece (Draft)</h1>
+<p>This is a draft post. It's not ready for the world yet!</p>
+<p>I'm currently working on outlining the key ideas for this post. It's going to cover:</p>
+<ul>
+<li>Topic A</li>
+<li>Topic B</li>
+<li>And an in-depth look at Topic C</li>
+</ul>
+<p>Stay tuned for when this gets published!</p>
+
+  </article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2024 My Eleventy Site. All rights reserved.</p>
+  </div>
+</footer>
+
+  <script src="/11ty-test/js/theme-switcher.js" defer></script>
+</body>
+</html>
