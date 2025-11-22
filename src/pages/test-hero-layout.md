@@ -1,7 +1,7 @@
 ---
 title: "Test: Hero Layout"
 layout: layouts/hero-image-page.njk
-heroImageUrl: "/images/image1.jpg"
+heroImageUrl: "https://images.unsplash.com/photo-1763411711221-40166c5e20cd?q=80&w=3293&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 heroTitle: "Hero Test Title"
 heroSubtitle: "This is a subtitle for the hero section test."
 ---
