@@ -17,15 +17,18 @@ class BlogAdmin {
         document.getElementById('new-post-btn').addEventListener('click', () => this.showNewPost());
         document.getElementById('import-post-btn').addEventListener('click', () => this.importMarkdown());
         document.getElementById('back-to-list').addEventListener('click', () => this.showPostList());
-        
+
         // Form actions
         document.getElementById('save-post').addEventListener('click', () => this.savePost());
         document.getElementById('delete-post').addEventListener('click', () => this.deletePost());
-        
+
         // Auto-generate slug from title
         document.getElementById('post-title').addEventListener('input', (e) => {
             this.updateSlugPreview(e.target.value);
         });
+
+        // Handle file upload simulation
+        document.getElementById('post-hero-upload').addEventListener('change', (e) => this.handleImageUpload(e));
     }
 
     showPostList() {
@@ -59,7 +62,7 @@ class BlogAdmin {
         const now = new Date();
         const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
             .toISOString().slice(0, 16);
-        
+
         document.getElementById('post-date').value = localDateTime;
         document.getElementById('post-layout').value = 'post.njk';
         document.getElementById('post-status').value = 'draft';
@@ -70,9 +73,11 @@ class BlogAdmin {
         document.getElementById('post-layout').value = post.layout || 'post.njk';
         document.getElementById('post-tags').value = post.tags ? post.tags.join(', ') : '';
         document.getElementById('post-excerpt').value = post.excerpt || '';
+        document.getElementById('post-excerpt').value = post.excerpt || '';
         document.getElementById('post-content').value = post.content || '';
+        document.getElementById('post-hero-image').value = post.heroImageUrl || '';
         document.getElementById('post-status').value = post.draft ? 'draft' : 'published';
-        
+
         if (post.date) {
             const date = new Date(post.date);
             const localDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
@@ -93,13 +98,37 @@ class BlogAdmin {
         // You could add a slug preview element here if desired
     }
 
+    handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const filename = file.name;
+            const imagePath = `/images/${filename}`;
+
+            // Auto-fill the URL field
+            document.getElementById('post-hero-image').value = imagePath;
+
+            // Show instructions
+            const instructions = `Image path set to "${imagePath}".\n\nPlease move your image file to the "src/images/" directory.\n\nQuick command:\nmv ~/Downloads/${filename} src/images/`;
+
+            setTimeout(() => {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(`mv ~/Downloads/${filename} src/images/`).then(() => {
+                        alert(instructions + '\n\n(Command copied to clipboard!)');
+                    });
+                } else {
+                    alert(instructions);
+                }
+            }, 100);
+        }
+    }
+
     async loadPosts() {
         try {
             // In a real implementation, this would fetch from your backend
             // For now, we'll simulate with localStorage
             const savedPosts = localStorage.getItem('blogPosts');
             this.posts = savedPosts ? JSON.parse(savedPosts) : this.getSamplePosts();
-            
+
             this.renderPostList();
         } catch (error) {
             console.error('Error loading posts:', error);
@@ -136,13 +165,13 @@ class BlogAdmin {
     renderPostList() {
         const publishedContainer = document.getElementById('published-posts');
         const draftContainer = document.getElementById('draft-posts');
-        
+
         publishedContainer.innerHTML = '';
         draftContainer.innerHTML = '';
-        
+
         const publishedPosts = this.posts.filter(post => !post.draft);
         const draftPosts = this.posts.filter(post => post.draft);
-        
+
         if (publishedPosts.length === 0) {
             publishedContainer.innerHTML = '<div class="empty-state">No published posts yet</div>';
         } else {
@@ -150,7 +179,7 @@ class BlogAdmin {
                 publishedContainer.appendChild(this.createPostItem(post));
             });
         }
-        
+
         if (draftPosts.length === 0) {
             draftContainer.innerHTML = '<div class="empty-state">No draft posts</div>';
         } else {
@@ -164,10 +193,10 @@ class BlogAdmin {
         const item = document.createElement('div');
         item.className = 'post-item';
         item.addEventListener('click', () => this.showEditPost(post));
-        
+
         const date = new Date(post.date).toLocaleDateString();
         const tagsText = post.tags ? post.tags.join(', ') : 'No tags';
-        
+
         item.innerHTML = `
             <h3>${post.title}</h3>
             <div class="post-meta">
@@ -175,7 +204,7 @@ class BlogAdmin {
             </div>
             <div class="post-excerpt">${post.excerpt || 'No excerpt available'}</div>
         `;
-        
+
         return item;
     }
 
@@ -188,7 +217,9 @@ class BlogAdmin {
             layout: formData.get('layout'),
             tags: formData.get('tags').split(',').map(tag => tag.trim()).filter(tag => tag),
             excerpt: formData.get('excerpt'),
+            excerpt: formData.get('excerpt'),
             content: formData.get('content'),
+            heroImageUrl: formData.get('heroImageUrl'),
             draft: formData.get('status') === 'draft'
         };
 
@@ -211,11 +242,11 @@ class BlogAdmin {
 
             // Save to localStorage (in real app, this would be an API call)
             localStorage.setItem('blogPosts', JSON.stringify(this.posts));
-            
+
             // Generate markdown file content
             const markdownContent = this.generateMarkdownFile(postData);
             this.downloadMarkdownFile(postData, markdownContent);
-            
+
             alert('Post saved successfully! The markdown file has been downloaded.');
             this.showPostList();
         } catch (error) {
@@ -234,6 +265,10 @@ class BlogAdmin {
 
         if (post.excerpt) {
             frontmatter.excerpt = post.excerpt;
+        }
+
+        if (post.heroImageUrl) {
+            frontmatter.heroImageUrl = post.heroImageUrl;
         }
 
         if (post.draft) {
@@ -263,10 +298,10 @@ class BlogAdmin {
         const slug = this.generateSlug(post.title);
         const date = post.date.toISOString().split('T')[0];
         const filename = `${date}-${slug}.md`;
-        
+
         const blob = new Blob([content], { type: 'text/markdown' });
         const url = URL.createObjectURL(blob);
-        
+
         const a = document.createElement('a');
         a.href = url;
         a.download = filename;
@@ -274,11 +309,11 @@ class BlogAdmin {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        
+
         // Show instructions with copy-to-clipboard functionality
         const folder = post.draft ? 'src/drafts' : 'src/posts';
         const instructions = `File saved! Please move "${filename}" to the "${folder}" directory.\n\nQuick command:\nmv ~/Downloads/${filename} ${folder}/`;
-        
+
         setTimeout(() => {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(`mv ~/Downloads/${filename} ${folder}/`).then(() => {
@@ -318,44 +353,46 @@ class BlogAdmin {
     parseMarkdownFile(content, filename) {
         const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
         const match = content.match(frontmatterRegex);
-        
+
         let frontmatter = {};
         let markdownContent = content;
-        
+
         if (match) {
             const frontmatterText = match[1];
             markdownContent = match[2];
-            
+
             // Simple YAML parsing (basic implementation)
             frontmatterText.split('\n').forEach(line => {
                 const colonIndex = line.indexOf(':');
                 if (colonIndex > 0) {
                     const key = line.substring(0, colonIndex).trim();
                     let value = line.substring(colonIndex + 1).trim();
-                    
+
                     // Remove quotes
-                    if ((value.startsWith('"') && value.endsWith('"')) || 
+                    if ((value.startsWith('"') && value.endsWith('"')) ||
                         (value.startsWith("'") && value.endsWith("'"))) {
                         value = value.slice(1, -1);
                     }
-                    
+
                     // Handle arrays (basic)
                     if (key === 'tags' && value.startsWith('[') && value.endsWith(']')) {
                         value = value.slice(1, -1).split(',').map(tag => tag.trim().replace(/['"]/g, ''));
                     }
-                    
+
                     frontmatter[key] = value;
                 }
             });
         }
-        
+
         return {
             id: Date.now().toString(),
             title: frontmatter.title || filename.replace(/\.md$/, ''),
             date: frontmatter.date ? new Date(frontmatter.date) : new Date(),
             layout: frontmatter.layout || 'post.njk',
             tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
+            tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
             excerpt: frontmatter.excerpt || '',
+            heroImageUrl: frontmatter.heroImageUrl || '',
             content: markdownContent.trim(),
             draft: frontmatter.draft === true || frontmatter.draft === 'true'
         };
@@ -363,7 +400,7 @@ class BlogAdmin {
 
     async deletePost() {
         if (!this.currentPost) return;
-        
+
         if (confirm('Are you sure you want to delete this post?')) {
             this.posts = this.posts.filter(p => p.id !== this.currentPost.id);
             localStorage.setItem('blogPosts', JSON.stringify(this.posts));

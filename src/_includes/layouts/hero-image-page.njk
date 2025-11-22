@@ -5,6 +5,7 @@
 <section class="hero-image-section" style="background-image: url('{{ heroImageUrl | url }}');">
   <div class="hero-content container"> {# Added a container for hero content #}
     {% if heroTitle %}<h1>{{ heroTitle }}</h1>{% endif %}
+    {% if date %}<p class="hero-date"><time datetime="{{ date | readableDate('yyyy-MM-dd') }}">{{ date | readableDate }}</time></p>{% endif %}
     {% if heroSubtitle %}<p class="hero-subtitle">{{ heroSubtitle }}</p>{% endif %}
   </div>
 </section>
