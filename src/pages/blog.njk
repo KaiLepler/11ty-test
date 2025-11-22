@@ -1,0 +1,106 @@
+---
+layout: layout.njk
+title: "My Blog"
+permalink: /blog/index.html
+---
+
+<div class="blog-header">
+  <h1>My Blog</h1>
+  <p>Welcome to my blog! Here I'll share my thoughts on various topics.</p>
+  
+  <div class="tag-filter-container">
+    <span class="filter-label">Filter by tag:</span>
+    <div id="tag-filters" class="tag-filters">
+      <button class="tag-filter active" data-tag="all">All</button>
+      {% set allTags = [] %}
+      {% for post in collections.publishedPosts %}
+        {% if post.data.tags %}
+          {% for tag in post.data.tags %}
+            {% if tag not in allTags %}
+              {% set allTags = (allTags.push(tag), allTags) %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+      
+      {% for tag in allTags %}
+        <button class="tag-filter" data-tag="{{ tag }}">{{ tag }}</button>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% if collections.publishedPosts.length > 0 %}
+  <div class="blog-grid">
+    {% for post in collections.publishedPosts %}
+      <article class="blog-card" data-tags="{{ post.data.tags | join(',') }}">
+        <a href="{{ post.url | url }}" class="blog-card-link">
+          <div class="blog-card-image">
+            {% if post.data.heroImageUrl %}
+              <img src="{{ post.data.heroImageUrl | url }}" alt="{{ post.data.title }}" loading="lazy">
+            {% else %}
+              <div class="blog-card-placeholder">
+                <span>{{ post.data.title | truncate(2) }}</span>
+              </div>
+            {% endif %}
+          </div>
+          <div class="blog-card-content">
+            <div class="blog-card-meta">
+              <time datetime="{{ post.date | readableDate('yyyy-MM-dd') }}">{{ post.date | readableDate }}</time>
+              {% if post.data.author %}
+                <span class="blog-card-author">by {{ post.data.author }}</span>
+              {% endif %}
+            </div>
+            <h2 class="blog-card-title">{{ post.data.title }}</h2>
+            {% if post.data.excerpt %}
+              <p class="blog-card-excerpt">{{ post.data.excerpt }}</p>
+            {% endif %}
+            <div class="blog-card-tags">
+              {% if post.data.tags %}
+                {% for tag in post.data.tags %}
+                  <span class="tag-pill">{{ tag }}</span>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No blog posts yet. Stay tuned!</p>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.tag-filter');
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        button.classList.add('active');
+
+        const selectedTag = button.getAttribute('data-tag');
+
+        blogCards.forEach(card => {
+          if (selectedTag === 'all') {
+            card.style.display = 'flex';
+            setTimeout(() => card.style.opacity = '1', 50);
+          } else {
+            const cardTags = card.getAttribute('data-tags').split(',');
+            if (cardTags.includes(selectedTag)) {
+              card.style.display = 'flex';
+              setTimeout(() => card.style.opacity = '1', 50);
+            } else {
+              card.style.opacity = '0';
+              setTimeout(() => card.style.display = 'none', 300);
+            }
+          }
+        });
+      });
+    });
+  });
+</script>

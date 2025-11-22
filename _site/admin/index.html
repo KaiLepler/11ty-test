@@ -1,11 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Admin</title>
     <link rel="stylesheet" href="admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .admin-main {
+            display: flex;
+            gap: 20px;
+        }
+
+        .view {
+            width: 100%;
+        }
+
+        #post-editor-view.active {
+            display: flex;
+            gap: 20px;
+        }
+
+        .editor-pane {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .preview-pane {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            display: none;
+        }
+
+        #post-editor-view.active .preview-pane {
+            display: block;
+        }
+
+        .preview-content img {
+            max-width: 100%;
+        }
+    </style>
 </head>
+
 <body>
     <div class="admin-container">
         <header class="admin-header">
@@ -42,69 +84,87 @@
                     </div>
                 </div>
 
-                <form id="post-form" class="post-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="post-title">Title</label>
-                            <input type="text" id="post-title" name="title" required>
+                <div class="editor-pane">
+                    <form id="post-form" class="post-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="post-title">Title</label>
+                                <input type="text" id="post-title" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="post-author">Author</label>
+                                <input type="text" id="post-author" name="author" placeholder="Your Name">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="post-layout">Layout</label>
-                            <select id="post-layout" name="layout">
-                                <option value="post.njk">Standard Post</option>
-                                <option value="layouts/standard-page.njk">Standard Page</option>
-                                <option value="layouts/hero-image-page.njk">Hero Image Page</option>
-                                <option value="layouts/page-with-sidebar.njk">Page with Sidebar</option>
-                                <option value="layouts/wide-page.njk">Wide Page</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="post-hero-image">Hero Image URL</label>
-                            <input type="text" id="post-hero-image" name="heroImageUrl" placeholder="/images/my-image.jpg or https://...">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="post-layout">Layout</label>
+                                <select id="post-layout" name="layout">
+                                    <option value="post.njk">Standard Post</option>
+                                    <option value="layouts/standard-page.njk">Standard Page</option>
+                                    <option value="layouts/hero-image-page.njk">Hero Image Page</option>
+                                    <option value="layouts/page-with-sidebar.njk">Page with Sidebar</option>
+                                    <option value="layouts/wide-page.njk">Wide Page</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="post-hero-upload">Upload Image (Simulated)</label>
-                            <input type="file" id="post-hero-upload" accept="image/*">
-                            <small class="form-text text-muted">Select a file to get the path and instructions.</small>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="post-hero-image">Hero Image URL</label>
+                                <input type="text" id="post-hero-image" name="heroImageUrl"
+                                    placeholder="/images/my-image.jpg or https://...">
+                            </div>
+                            <div class="form-group">
+                                <label for="post-hero-upload">Upload Image (Simulated)</label>
+                                <input type="file" id="post-hero-upload" accept="image/*">
+                                <small class="form-text text-muted">Select a file to get the path and
+                                    instructions.</small>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="post-date">Date</label>
-                            <input type="datetime-local" id="post-date" name="date">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="post-date">Date</label>
+                                <input type="datetime-local" id="post-date" name="date">
+                            </div>
+                            <div class="form-group">
+                                <label for="post-status">Status</label>
+                                <select id="post-status" name="status">
+                                    <option value="published">Published</option>
+                                    <option value="draft">Draft</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="post-status">Status</label>
-                            <select id="post-status" name="status">
-                                <option value="published">Published</option>
-                                <option value="draft">Draft</option>
-                            </select>
+                            <label for="post-tags">Tags (comma-separated)</label>
+                            <input type="text" id="post-tags" name="tags" placeholder="web, javascript, tutorial">
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="post-tags">Tags (comma-separated)</label>
-                        <input type="text" id="post-tags" name="tags" placeholder="web, javascript, tutorial">
-                    </div>
+                        <div class="form-group">
+                            <label for="post-excerpt">Excerpt</label>
+                            <textarea id="post-excerpt" name="excerpt" rows="3"
+                                placeholder="Brief description of the post..."></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="post-excerpt">Excerpt</label>
-                        <textarea id="post-excerpt" name="excerpt" rows="3" placeholder="Brief description of the post..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="post-content">Content</label>
-                        <textarea id="post-content" name="content" rows="20" placeholder="Write your post content in Markdown..."></textarea>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label for="post-content">Content</label>
+                            <textarea id="post-content" name="content" rows="20"
+                                placeholder="Write your post content in Markdown..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="preview-pane">
+                    <h2>Live Preview</h2>
+                    <div id="preview-content" class="preview-content"></div>
+                </div>
             </div>
         </main>
     </div>
 
     <script src="admin.js"></script>
 </body>
+
 </html>

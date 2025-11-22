@@ -29,6 +29,15 @@ class BlogAdmin {
 
         // Handle file upload simulation
         document.getElementById('post-hero-upload').addEventListener('change', (e) => this.handleImageUpload(e));
+
+        // Live Preview Listeners
+        const previewInputs = ['post-title', 'post-content', 'post-hero-image', 'post-author', 'post-date'];
+        previewInputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', () => this.updatePreview());
+            }
+        });
     }
 
     showPostList() {
@@ -51,7 +60,9 @@ class BlogAdmin {
         this.populateForm(post);
         document.getElementById('post-list-view').classList.remove('active');
         document.getElementById('post-editor-view').classList.add('active');
+        document.getElementById('post-editor-view').classList.add('active');
         document.getElementById('delete-post').style.display = 'inline-block';
+        this.updatePreview();
     }
 
     clearForm() {
@@ -70,6 +81,7 @@ class BlogAdmin {
 
     populateForm(post) {
         document.getElementById('post-title').value = post.title || '';
+        document.getElementById('post-author').value = post.author || '';
         document.getElementById('post-layout').value = post.layout || 'post.njk';
         document.getElementById('post-tags').value = post.tags ? post.tags.join(', ') : '';
         document.getElementById('post-excerpt').value = post.excerpt || '';
@@ -213,6 +225,7 @@ class BlogAdmin {
         const postData = {
             id: this.currentPost?.id || Date.now().toString(),
             title: formData.get('title'),
+            author: formData.get('author'),
             date: new Date(formData.get('date')),
             layout: formData.get('layout'),
             tags: formData.get('tags').split(',').map(tag => tag.trim()).filter(tag => tag),
@@ -259,6 +272,7 @@ class BlogAdmin {
         const frontmatter = {
             layout: post.layout,
             title: post.title,
+            author: post.author,
             date: post.date.toISOString(),
             tags: post.tags
         };
@@ -387,6 +401,7 @@ class BlogAdmin {
         return {
             id: Date.now().toString(),
             title: frontmatter.title || filename.replace(/\.md$/, ''),
+            author: frontmatter.author || '',
             date: frontmatter.date ? new Date(frontmatter.date) : new Date(),
             layout: frontmatter.layout || 'post.njk',
             tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],

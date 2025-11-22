@@ -77,14 +77,99 @@
   <main id="main-content" class="container">
     
 <article class="page-standard">
+  
+<div class="blog-header">
   <h1>My Blog</h1>
-<p>Welcome to my blog! Here I'll share my thoughts on various topics.</p>
-  <ul>
-<p><li>
-<h2><a href="/11ty-test/posts/example-post/">My First Blog Post</a></h2>
-<p><time datetime="2023-10-26">October 26, 2023</time></p></p>
-<p></li></p>
-  </ul>
+  <p>Welcome to my blog! Here I'll share my thoughts on various topics.</p>
+  
+  <div class="tag-filter-container">
+    <span class="filter-label">Filter by tag:</span>
+    <div id="tag-filters" class="tag-filters">
+      <button class="tag-filter active" data-tag="all">All</button>
+      
+      
+        
+          
+            
+              
+            
+          
+        
+      
+      
+      
+        <button class="tag-filter" data-tag="posts">posts</button>
+      
+    </div>
+  </div>
+</div>
+
+
+  <div class="blog-grid">
+    
+      <article class="blog-card" data-tags="posts">
+        <a href="/11ty-test/posts/example-post/" class="blog-card-link">
+          <div class="blog-card-image">
+            
+              <div class="blog-card-placeholder">
+                <span>My...</span>
+              </div>
+            
+          </div>
+          <div class="blog-card-content">
+            <div class="blog-card-meta">
+              <time datetime="2023-10-26">October 26, 2023</time>
+              
+            </div>
+            <h2 class="blog-card-title">My First Blog Post</h2>
+            
+            <div class="blog-card-tags">
+              
+                
+                  <span class="tag-pill">posts</span>
+                
+              
+            </div>
+          </div>
+        </a>
+      </article>
+    
+  </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.tag-filter');
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        button.classList.add('active');
+
+        const selectedTag = button.getAttribute('data-tag');
+
+        blogCards.forEach(card => {
+          if (selectedTag === 'all') {
+            card.style.display = 'flex';
+            setTimeout(() => card.style.opacity = '1', 50);
+          } else {
+            const cardTags = card.getAttribute('data-tags').split(',');
+            if (cardTags.includes(selectedTag)) {
+              card.style.display = 'flex';
+              setTimeout(() => card.style.opacity = '1', 50);
+            } else {
+              card.style.opacity = '0';
+              setTimeout(() => card.style.display = 'none', 300);
+            }
+          }
+        });
+      });
+    });
+  });
+</script>
 
 </article>
 
