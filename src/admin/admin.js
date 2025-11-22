@@ -12,6 +12,14 @@ class BlogAdmin {
         this.showPostList();
     }
 
+    // Helper to detect if we are running on the local dev server
+    isLocalDev() {
+        const host = window.location.hostname;
+        const port = window.location.port;
+        // Development runs on localhost (port may be empty) or the API server on 3000
+        return host === 'localhost' && (port === '' || port === '3000');
+    }
+
     bindEvents() {
         // Navigation
         document.getElementById('new-post-btn').addEventListener('click', () => this.showNewPost());
@@ -40,6 +48,18 @@ class BlogAdmin {
                 el.addEventListener('input', () => this.updatePreview());
             }
         });
+        // Hide Publish button on production builds
+        if (!this.isLocalDev()) {
+            const publishBtn = document.getElementById('publish-post');
+            if (publishBtn) {
+                publishBtn.style.display = 'none';
+                const hint = document.createElement('span');
+                hint.textContent = 'Publish works only locally';
+                hint.style.fontSize = '0.85rem';
+                hint.style.color = '#777';
+                publishBtn.parentNode.appendChild(hint);
+            }
+        }
     }
 
     showPostList() {
