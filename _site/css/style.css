@@ -382,7 +382,7 @@ button:hover {
   opacity: 0.85;
 }
 
-/* 10. Theme Switcher Styles (Existing) - No changes needed here unless related to spacing */
+/* 10. Theme Switcher Styles - Button-based with three modes */
 .theme-switcher-container {
   display: flex;
   align-items: center;
@@ -391,92 +391,40 @@ button:hover {
 
 .theme-switcher {
   position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.theme-switcher input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   background-color: var(--color-switcher-bg);
-  transition: .4s;
-  border-radius: 34px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: var(--color-switcher-slider);
-  transition: .4s;
+  border: 2px solid var(--color-switcher-slider);
   border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  outline: none;
 }
 
-input:checked+.slider:before {
-  transform: translateX(26px);
+.theme-switcher:hover {
+  background-color: var(--color-switcher-slider);
+  transform: scale(1.1);
+}
+
+.theme-switcher:active {
+  transform: scale(0.95);
 }
 
 .theme-switcher .icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1rem;
-  color: var(--color-switcher-icon);
-  pointer-events: none;
+  display: none;
+  font-size: 1.5rem;
+  transition: opacity 0.2s ease;
 }
 
-.theme-switcher .sun-icon {
-  left: 8px;
-}
-
-.theme-switcher .moon-icon {
-  right: 8px;
-}
-
-#theme-checkbox:not(:checked)~.sun-icon {
-  opacity: 1;
-}
-
-#theme-checkbox:not(:checked)~.moon-icon {
-  opacity: 0;
-}
-
-#theme-checkbox:checked~.sun-icon {
-  opacity: 0;
-}
-
-#theme-checkbox:checked~.moon-icon {
-  opacity: 1;
-}
-
-html[data-theme='dark'] .theme-switcher .sun-icon {
-  opacity: 1;
-}
-
-html[data-theme='dark'] .theme-switcher .moon-icon {
-  opacity: 0;
-}
-
-html[data-theme='light'] .theme-switcher .sun-icon {
-  opacity: 0;
-}
-
-html[data-theme='light'] .theme-switcher .moon-icon {
-  opacity: 1;
+/* Only show the icon that matches current mode */
+.theme-switcher .sun-icon,
+.theme-switcher .moon-icon,
+.theme-switcher .auto-icon {
+  display: none;
 }
 
 /* 11. New Layout Styles */

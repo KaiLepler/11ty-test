@@ -21,4 +21,13 @@ I enjoy capturing moments and scenes through photography. This section will show
 
 ## Check Out My Blog
 
-I write about various topics on my [blog](/blog/). Head over to read my latest posts!
+I write about various topics on my [blog]({{ '/blog/' | url }}). Head over to read my latest posts!
+
+## Layout Examples
+
+Explore different page layouts:
+
+- [Hero Layout]({{ '/pages/test-hero-layout/' | url }}) - Full-width hero section with overlay content
+- [Wide Layout]({{ '/pages/test-wide-layout/' | url }}) - Wide content area for maximum space
+- [Sidebar Layout]({{ '/pages/test-sidebar-layout/' | url }}) - Main content with sidebar
+- [Standard Layout]({{ '/pages/test-standard-layout/' | url }}) - Classic centered content
