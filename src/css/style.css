@@ -693,10 +693,10 @@ html[data-theme='light'] .theme-switcher .moon-icon {
   justify-content: center;
   padding: 0.6rem;
   border-radius: 50%;
-  color: #ffffff;
-  /* white text */
-  background: #2F3E35;
-  /* solid dark background for contrast */
+  color: #2F3E35;
+  /* Dark muddy green grey for light mode visibility */
+  background: rgba(47, 62, 53, 0.05);
+  /* Subtle background */
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   text-decoration: none;
@@ -820,8 +820,20 @@ html[data-theme='light'] .theme-switcher .moon-icon {
 
 /* Accessibility enhancements */
 .nav-link:focus-visible {
-  outline: 2px solid #00b4d8;
-  outline-offset: 4px;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Explicit Light Theme Override (for when OS is Dark but User toggles Light) */
+html[data-theme='light'] .nav-link {
+  color: #2F3E35;
+  background: rgba(47, 62, 53, 0.05);
+}
+
+html[data-theme='light'] .nav-link:hover {
+  color: #000000;
+  background-color: #00b4d8;
+  border-color: rgba(0, 119, 182, 0.8);
 }
 
 @media (prefers-reduced-motion: reduce) {
