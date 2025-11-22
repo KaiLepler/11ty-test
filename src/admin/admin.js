@@ -19,6 +19,8 @@ class BlogAdmin {
         document.getElementById('back-to-list').addEventListener('click', () => this.showPostList());
 
         // Form actions
+        // Form actions
+        document.getElementById('publish-post').addEventListener('click', () => this.publishPost());
         document.getElementById('save-post').addEventListener('click', () => this.savePost());
         document.getElementById('delete-post').addEventListener('click', () => this.deletePost());
 
@@ -136,15 +138,18 @@ class BlogAdmin {
 
     async loadPosts() {
         try {
-            // In a real implementation, this would fetch from your backend
-            // For now, we'll simulate with localStorage
-            const savedPosts = localStorage.getItem('blogPosts');
-            this.posts = savedPosts ? JSON.parse(savedPosts) : this.getSamplePosts();
-
+            // Try to fetch from local API server
+            const response = await fetch('http://localhost:3000/api/posts');
+            if (response.ok) {
+                this.posts = await response.json();
+            } else {
+                throw new Error('API not available');
+            }
             this.renderPostList();
         } catch (error) {
-            console.error('Error loading posts:', error);
-            this.posts = this.getSamplePosts();
+            console.log('Local API not available, falling back to localStorage/sample data');
+            const savedPosts = localStorage.getItem('blogPosts');
+            this.posts = savedPosts ? JSON.parse(savedPosts) : this.getSamplePosts();
             this.renderPostList();
         }
     }
@@ -220,16 +225,15 @@ class BlogAdmin {
         return item;
     }
 
-    async savePost() {
+    async publishPost() {
         const formData = new FormData(document.getElementById('post-form'));
         const postData = {
-            id: this.currentPost?.id || Date.now().toString(),
+            id: this.currentPost?.id, // Keep existing ID (filename) if editing
             title: formData.get('title'),
             author: formData.get('author'),
             date: new Date(formData.get('date')),
             layout: formData.get('layout'),
             tags: formData.get('tags').split(',').map(tag => tag.trim()).filter(tag => tag),
-            excerpt: formData.get('excerpt'),
             excerpt: formData.get('excerpt'),
             content: formData.get('content'),
             heroImageUrl: formData.get('heroImageUrl'),
@@ -242,29 +246,60 @@ class BlogAdmin {
         }
 
         try {
-            if (this.currentPost) {
-                // Update existing post
-                const index = this.posts.findIndex(p => p.id === this.currentPost.id);
-                if (index !== -1) {
-                    this.posts[index] = postData;
-                }
+            const response = await fetch('http://localhost:3000/api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Post published successfully to ${result.filename}!`);
+                this.loadPosts(); // Reload list to see new file
+                this.showPostList();
             } else {
-                // Add new post
-                this.posts.push(postData);
+                throw new Error('Failed to save to server');
             }
+        } catch (error) {
+            console.error('Error publishing post:', error);
+            alert('Error publishing post locally. Make sure you are running "npm start". Falling back to download...');
+            this.savePost(); // Fallback to download
+        }
+    }
 
-            // Save to localStorage (in real app, this would be an API call)
-            localStorage.setItem('blogPosts', JSON.stringify(this.posts));
+    // Renamed from savePost to keep "Download" functionality as backup
+    async savePost() {
+        const formData = new FormData(document.getElementById('post-form'));
+        const postData = {
+            id: this.currentPost?.id || Date.now().toString(),
+            title: formData.get('title'),
+            author: formData.get('author'),
+            date: new Date(formData.get('date')),
+            layout: formData.get('layout'),
+            tags: formData.get('tags').split(',').map(tag => tag.trim()).filter(tag => tag),
+            excerpt: formData.get('excerpt'),
+            content: formData.get('content'),
+            heroImageUrl: formData.get('heroImageUrl'),
+            draft: formData.get('status') === 'draft'
+        };
 
+        if (!postData.title.trim()) {
+            alert('Please enter a title for the post');
+            return;
+        }
+
+        try {
             // Generate markdown file content
             const markdownContent = this.generateMarkdownFile(postData);
             this.downloadMarkdownFile(postData, markdownContent);
 
-            alert('Post saved successfully! The markdown file has been downloaded.');
-            this.showPostList();
+            // Don't switch view, just notify
+            // alert('Markdown file downloaded.');
         } catch (error) {
-            console.error('Error saving post:', error);
-            alert('Error saving post. Please try again.');
+            console.error('Error downloading post:', error);
+            alert('Error downloading post.');
         }
     }
 
