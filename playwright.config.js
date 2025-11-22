@@ -46,7 +46,7 @@ module.exports = defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npx @11ty/eleventy --serve --port=8080',
-    url: 'http://localhost:8080/11ty-test',
+    url: 'http://localhost:8080/11ty-test/',
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
     stderr: 'pipe',
